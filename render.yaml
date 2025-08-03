@@ -1,0 +1,27 @@
+# הגדרת השירותים (יכול להיות יותר מאחד)
+services:
+  # הגדרת שירות יחיד
+  - type: web                          # סוג השירות - web = אתר/API
+    name: my-telegram-bot              # שם השירות (באנגלית)
+    env: python                        # סביבת הפעלה
+    plan: free                         # תוכנית תשלום (free/starter/standard)
+    
+    # פקודות בנייה והפעלה
+    buildCommand: "pip install -r requirements.txt"  # מה לעשות בזמן בנייה
+    startCommand: "python main.py"                   # איך להפעיל את האפליקציה
+    
+    # הגדרות Keep-Alive
+    healthCheckPath: /                 # איזה נתיב לבדוק לזמינות (קריטי!)
+    
+    # משתני סביבה (לא רגישים)
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.10.6"              # גרסת פייתון מועדפת
+      - key: ENVIRONMENT 
+        value: "production"          # סביבת הפעלה
+    
+    # דיסק קשיח קבוע (אם צריך לשמור קבצים)
+    disks:
+      - name: bot-storage            # שם הדיסק
+        mountPath: /var/data         # איפה הוא יהיה זמין בקוד
+        sizeGB: 1                    # גודל בגיגה (1GB חינם)
